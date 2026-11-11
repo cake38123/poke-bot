@@ -6,6 +6,7 @@ import json
 import time
 import math
 import asyncio
+from pokemon_sprites import sprites
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -25,9 +26,6 @@ level_ranges = [low_level, medium_level, high_level]
 
 # weighting for level range randomness
 level_weights = [80, 15, 5]
-
-# dictionary for pokemon sprites
-sprites = {'Pikachu': {'default': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png', 'shiny': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/25.png'}, 'Charmander' : {'default': "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/4.png", 'shiny': "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/4.png" }, 'Squirtle' : { 'default': "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/7.png", 'shiny': "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/7.png"}, 'Bulbasaur' : {'default': "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/1.gif", 'shiny': "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/1.png"}}
 
 # index of current encounter
 current = None
