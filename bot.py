@@ -8,6 +8,8 @@ import math
 import asyncio
 from pokemon_sprites import sprites
 from pokemon_sprites import POKEDEX_NAMES
+from pokemon_rarity import pokemon_by_rarity
+from pokemon_rarity import rarity_weights
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -95,9 +97,10 @@ async def encounter(ctx):
         return
 
     # generate pokemon fields
-    species = POKEDEX_NAMES[random.randint(0, len(POKEDEX_NAMES) - 1)]
+    species = get_species()
     level = get_level()
     shiny = True if random.randint(1, 4096) == 1 else False
+
     current = {"species": species, "level" :level, "shiny?":shiny}
 
     encounter_deadline = time.monotonic() + 30
@@ -105,6 +108,28 @@ async def encounter(ctx):
     asyncio.create_task(expire_encounter(ctx.channel, encounter_deadline))
     
     await display_encounter(ctx)
+
+"""
+HELPER
+function: get_species()
+
+parameters:
+    - none
+
+returns:
+    - string containing pokemon name
+
+description:
+    - randomly selects a tier, each tier has a weight : common > uncommon > rare > legendary
+    - each tier has an associated list of pokemon names stored as string
+    - randomly picks a name from the tier's list
+"""
+def get_species():
+    tiers = list(rarity_weights)
+    weights = [rarity_weights[tier] for tier in tiers]
+    selected_tier = random.choices(tiers, weights=weights)[0]
+    return random.choice(pokemon_by_rarity[selected_tier])
+
 
 """
 HELPER
