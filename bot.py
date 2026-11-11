@@ -7,6 +7,7 @@ import time
 import math
 import asyncio
 from pokemon_sprites import sprites
+from pokemon_sprites import POKEDEX_NAMES
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -14,8 +15,6 @@ bot = commands.Bot(command_prefix='>', intents=intents)
 
 token = os.getenv('DISCORD_BOT_TOKEN')
 
-# list of Pokémon names
-pokemon = ['Pikachu', 'Charmander', 'Squirtle', 'Bulbasaur']
 
 # level ranges
 low_level = list(range(1,35))
@@ -96,7 +95,7 @@ async def encounter(ctx):
         return
 
     # generate pokemon fields
-    species = pokemon[random.randint(0, len(pokemon) - 1)]
+    species = POKEDEX_NAMES[random.randint(0, len(POKEDEX_NAMES) - 1)]
     level = get_level()
     shiny = True if random.randint(1, 4096) == 1 else False
     current = {"species": species, "level" :level, "shiny?":shiny}
